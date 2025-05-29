@@ -6,12 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".ui.NoteListFragment">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_note_list" android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="?attr/actionBarPopupTheme"
+            app:layout_scrollFlags="scroll|enterAlways">
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_notes"
+        android:id="@+id/recyclerview_notes"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/list_item_note" />
+        android:paddingTop="8dp"
+        android:paddingBottom="72dp" android:clipToPadding="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" tools:listitem="@layout/list_item_note" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add_note"
@@ -19,6 +34,4 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_add"  android:contentDescription="Tambah Catatan" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        android:contentDescription="@string/add_note_description" app:srcCompat="@drawable/ic_add" app:tint="@android:color/white"/> </androidx.coordinatorlayout.widget.CoordinatorLayout>

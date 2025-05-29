@@ -6,8 +6,8 @@ import java.util.List;
 
 public class NoteRepository {
 
-    private NoteDao mNoteDao;
-    private LiveData<List<Note>> mAllNotes;
+    private final NoteDao mNoteDao; // Dibuat final
+    private final LiveData<List<Note>> mAllNotes; // Dibuat final
 
     public NoteRepository(Application application) {
         NoteDatabase db = NoteDatabase.getDatabase(application);
@@ -19,21 +19,27 @@ public class NoteRepository {
         return mAllNotes;
     }
 
+    public LiveData<Note> getNoteById(int id) {
+        return mNoteDao.getNoteById(id);
+    }
+
     public void insert(Note note) {
-        NoteDatabase.databaseWriteExecutor.execute(() -> {
-            mNoteDao.insert(note);
-        });
+        NoteDatabase.databaseWriteExecutor.execute(() -> mNoteDao.insert(note)); // Expression lambda
     }
 
     public void update(Note note) {
-        NoteDatabase.databaseWriteExecutor.execute(() -> {
-            mNoteDao.update(note);
-        });
+        NoteDatabase.databaseWriteExecutor.execute(() -> mNoteDao.update(note)); // Expression lambda
     }
 
     public void delete(Note note) {
-        NoteDatabase.databaseWriteExecutor.execute(() -> {
-            mNoteDao.delete(note);
-        });
+        NoteDatabase.databaseWriteExecutor.execute(() -> mNoteDao.delete(note)); // Expression lambda
+    }
+
+    public void deleteAllNotes() {
+        NoteDatabase.databaseWriteExecutor.execute(mNoteDao::deleteAllNotes); // Method reference
+    }
+
+    public LiveData<List<Note>> searchNotes(String query) {
+        return mNoteDao.searchNotes("%" + query + "%");
     }
 }

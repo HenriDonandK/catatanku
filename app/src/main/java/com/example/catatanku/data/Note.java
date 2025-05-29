@@ -31,8 +31,18 @@ public class Note implements Serializable { // Implement Serializable
         return content;
     }
 
-    // --- Setter ---
+    // --- Setters ---
     public void setId(int id) {
         this.id = id;
+    }
+
+    // TAMBAHKAN SETTER INI
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    // TAMBAHKAN SETTER INI
+    public void setContent(String content) {
+        this.content = content;
     }
 }

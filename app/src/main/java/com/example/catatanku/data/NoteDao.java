@@ -25,4 +25,12 @@ public interface NoteDao {
 
     @Query("SELECT * FROM notes_table ORDER BY id DESC")
     LiveData<List<Note>> getAllNotes();
+
+    @Query("SELECT * from notes_table WHERE id = :noteId")
+    LiveData<Note> getNoteById(int noteId);
+
+    // Ditambahkan untuk fungsionalitas pencarian
+    // Menggunakan "LOWER()" untuk pencarian case-insensitive
+    @Query("SELECT * FROM notes_table WHERE LOWER(title) LIKE LOWER(:query) OR LOWER(content) LIKE LOWER(:query) ORDER BY id DESC")
+    LiveData<List<Note>> searchNotes(String query);
 }

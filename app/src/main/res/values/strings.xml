@@ -1,3 +1,29 @@
 <resources>
-    <string name="app_name">catatanku</string>
+    <string name="app_name">Catatanku</string>
+    <string name="add_note_title_hint">Judul</string>
+    <string name="add_note_content_hint">Isi Catatan</string>
+    <string name="save_note_button_text">Simpan</string>
+    <string name="note_title_label">Judul</string>
+    <string name="note_content_label">Isi</string>
+    <string name="add_note_description">Tambah Catatan Baru</string>
+    <string name="edit_note_title">Edit Catatan</string>
+    <string name="add_note_title">Tambah Catatan</string>
+
+    <string name="search_hint">Cari catatan...</string>
+    <string name="delete_note_confirmation_title">Hapus Catatan?</string>
+    <string name="delete_note_confirmation_message">Apakah Anda yakin ingin menghapus catatan "%1$s"?</string>
+    <string name="delete_button_text">Hapus</string>
+    <string name="cancel_button_text">Batal</string>
+    <string name="note_deleted_message">Catatan dihapus</string>
+
+    <string name="action_delete_all_notes">Hapus Semua Catatan</string>
+    <string name="confirm_delete_all_message">Apakah Anda yakin ingin menghapus semua catatan?</string>
+    <string name="confirm_delete_all_positive">Hapus Semua</string>
+    <string name="confirm_delete_all_negative">Batal</string>
+
+    <string name="note_saved_broadcast">com.example.catatanku.NOTE_SAVED</string>
+    <string name="channel_name">Notifikasi Catatan</string>
+    <string name="channel_description">Notifikasi untuk catatan yang disimpan</string>
+    <string name="notification_title">Catatan Disimpan</string>
+    <string name="notification_text_format">Catatan "%s" telah disimpan.</string>
 </resources>

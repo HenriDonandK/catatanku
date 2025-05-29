@@ -24,9 +24,10 @@
 
         <receiver
             android:name=".receiver.NoteSavedReceiver"
-            android:exported="false"> <intent-filter>
-            <action android:name="com.example.catatanku.ACTION_NOTE_SAVED" />
-        </intent-filter>
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.example.catatanku.ACTION_NOTE_SAVED" />
+            </intent-filter>
         </receiver>
 
     </application>
