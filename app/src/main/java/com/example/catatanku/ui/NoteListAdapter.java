@@ -1,12 +1,17 @@
 package com.example.catatanku.ui;
 
-import android.graphics.Typeface; // Import untuk Typeface
+import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.ImageButton;
+import android.widget.ImageView; // Pastikan ImageView diimpor
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.PopupMenu;
+// import androidx.core.content.ContextCompat; // Tidak perlu jika tint sudah di XML
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,9 +20,8 @@ import com.example.catatanku.data.Note;
 
 public class NoteListAdapter extends ListAdapter<Note, NoteListAdapter.NoteViewHolder> {
 
-    private OnNoteItemInteractionListener listener;
+    private final OnNoteItemInteractionListener listener;
 
-    // Konstruktor diubah untuk menerima listener
     public NoteListAdapter(@NonNull DiffUtil.ItemCallback<Note> diffCallback, OnNoteItemInteractionListener listener) {
         super(diffCallback);
         this.listener = listener;
@@ -35,42 +39,75 @@ public class NoteListAdapter extends ListAdapter<Note, NoteListAdapter.NoteViewH
     public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
         Note currentNote = getItem(position);
         holder.textViewNoteTitle.setText(currentNote.getTitle());
-        holder.textViewNoteTitle.setTypeface(null, Typeface.BOLD); // Membuat judul tebal
+        holder.textViewNoteTitle.setTypeface(null, Typeface.BOLD);
 
         holder.textViewNoteContent.setText(currentNote.getContent());
-        holder.textViewNoteContent.setTypeface(null, Typeface.NORMAL); // Memastikan konten tidak tebal
+        holder.textViewNoteContent.setTypeface(null, Typeface.NORMAL);
 
-        // Listener untuk klik pada seluruh item (untuk edit)
+        // --- LOGIKA UNTUK INDIKATOR PIN ---
+        if (currentNote.isPinned()) {
+            holder.imageViewPinnedIndicator.setVisibility(View.VISIBLE);
+        } else {
+            holder.imageViewPinnedIndicator.setVisibility(View.GONE);
+        }
+        // ----------------------------------
+
         holder.itemView.setOnClickListener(v -> {
-            if (listener != null && currentNote != null) {
+            if (listener != null) {
                 listener.onNoteClick(currentNote);
             }
         });
 
-        // Listener untuk klik pada ikon hapus
-        holder.imageViewDeleteNote.setOnClickListener(v -> {
-            if (listener != null && currentNote != null) {
-                listener.onDeleteClick(currentNote);
+        holder.imageButtonOptions.setOnClickListener(view -> {
+            if (listener != null) {
+                showPopupMenu(holder.itemView.getContext(), view, currentNote, listener);
             }
         });
     }
 
-    static class NoteViewHolder extends RecyclerView.ViewHolder {
-        private final TextView textViewNoteTitle;
-        private final TextView textViewNoteContent;
-        private final ImageView imageViewDeleteNote; // Referensi ke ImageView ikon hapus
+    private void showPopupMenu(Context context, View anchorView, final Note note, final OnNoteItemInteractionListener itemListener) {
+        PopupMenu popup = new PopupMenu(context, anchorView);
+        popup.getMenuInflater().inflate(R.menu.note_item_options_menu, popup.getMenu());
+
+        MenuItem pinMenuItem = popup.getMenu().findItem(R.id.action_item_pin_unpin);
+        if (note.isPinned()) {
+            pinMenuItem.setTitle("Lepas Sematan");
+        } else {
+            pinMenuItem.setTitle("Sematkan");
+        }
+
+        popup.setOnMenuItemClickListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.action_item_pin_unpin) {
+                itemListener.onPinClick(note);
+                return true;
+            } else if (itemId == R.id.action_item_delete) {
+                itemListener.onDeleteClick(note);
+                return true;
+            }
+            return false;
+        });
+        popup.show();
+    }
+
+    public static class NoteViewHolder extends RecyclerView.ViewHolder {
+        final TextView textViewNoteTitle;
+        final TextView textViewNoteContent;
+        final ImageButton imageButtonOptions;
+        final ImageView imageViewPinnedIndicator; // Tambahkan referensi ini
 
         public NoteViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewNoteTitle = itemView.findViewById(R.id.textViewNoteTitle);
             textViewNoteContent = itemView.findViewById(R.id.textViewNoteContent);
-            imageViewDeleteNote = itemView.findViewById(R.id.imageViewDeleteNote); // Inisialisasi ImageView
+            imageButtonOptions = itemView.findViewById(R.id.imageButtonOptions);
+            imageViewPinnedIndicator = itemView.findViewById(R.id.imageViewPinnedIndicator); // Inisialisasi
         }
     }
 
-    // Interface untuk menangani interaksi klik
     public interface OnNoteItemInteractionListener {
-        void onNoteClick(Note note);       // Untuk klik edit
-        void onDeleteClick(Note note);    // Untuk klik hapus
+        void onNoteClick(Note note);
+        void onDeleteClick(Note note);
+        void onPinClick(Note note);
     }
 }

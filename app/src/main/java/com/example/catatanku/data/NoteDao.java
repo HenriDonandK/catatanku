@@ -23,7 +23,8 @@ public interface NoteDao {
     @Query("DELETE FROM notes_table")
     void deleteAllNotes();
 
-    @Query("SELECT * FROM notes_table ORDER BY id DESC")
+    // MODIFIKASI QUERY INI
+    @Query("SELECT * from notes_table ORDER BY is_pinned DESC, id DESC")
     LiveData<List<Note>> getAllNotes();
 
     @Query("SELECT * from notes_table WHERE id = :noteId")
@@ -31,6 +32,6 @@ public interface NoteDao {
 
     // Ditambahkan untuk fungsionalitas pencarian
     // Menggunakan "LOWER()" untuk pencarian case-insensitive
-    @Query("SELECT * FROM notes_table WHERE LOWER(title) LIKE LOWER(:query) OR LOWER(content) LIKE LOWER(:query) ORDER BY id DESC")
+    @Query("SELECT * FROM notes_table WHERE LOWER(title) LIKE LOWER(:query) OR LOWER(content) LIKE LOWER(:query) ORDER BY is_pinned DESC, id DESC")
     LiveData<List<Note>> searchNotes(String query);
 }

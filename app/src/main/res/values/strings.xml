@@ -26,4 +26,16 @@
     <string name="channel_description">Notifikasi untuk catatan yang disimpan</string>
     <string name="notification_title">Catatan Disimpan</string>
     <string name="notification_text_format">Catatan "%s" telah disimpan.</string>
+
+    <string name="share_options_title">Bagikan catatan</string>
+    <string name="share_as_text">Bagikan sebagai teks</string>
+    <string name="share_as_image">Bagikan sebagai gambar</string>
+    <string name="cancel">Batalkan</string> <string name="feature_not_implemented">Fitur belum diimplementasikan</string>
+
+    <string name="unpin_note">Lepas Sematan</string>
+    <string name="note_pinned_toast">Catatan disematkan</string>
+    <string name="note_unpinned_toast">Sematkan catatan dilepas</string>
+    <string name="delete_note_confirmation_title_detail">Hapus Catatan Ini?</string>
+    <string name="delete_note_confirmation_message_detail">Apakah Anda yakin ingin menghapus catatan \'%1$s\'?</string>
+    <string name="add_note_title_default_arg">Tambah Catatan</string> <string name="pin_note">Sematkan</string>
 </resources>
