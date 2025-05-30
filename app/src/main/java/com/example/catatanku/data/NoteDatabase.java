@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Note.class}, version = 1, exportSchema = false)
+@Database(entities = {Note.class}, version = 3, exportSchema = false)
 public abstract class NoteDatabase extends RoomDatabase {
 
     public abstract NoteDao noteDao();
@@ -24,6 +24,7 @@ public abstract class NoteDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                                     NoteDatabase.class, "note_database")
                             // .addCallback(sRoomDatabaseCallback) // Opsional: untuk pre-populate
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }

@@ -2,4 +2,15 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="m3_purple_primary">#FF6750A4</color>
+    <color name="m3_white_on_primary">#FFFFFFFF</color>
+
+    <color name="toolbar_background_light_blue">#FFADD8E6</color>
+    <color name="toolbar_icons_and_text_dark">#FF212121</color>
+    <color name="toolbar_icons_and_text_white">#FFFFFFFF</color>
+    <color name="toolbar_popup_text_light">#FFFFFFFF</color>
+    <color name="toolbar_popup_text_dark">#FF000000</color>
+
+    <color name="color_accent_pinned">#FFFFC107</color>
 </resources>

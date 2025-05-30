@@ -13,7 +13,8 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_note_list" android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@color/toolbar_background_light_blue"
+            app:titleTextColor="@color/toolbar_icons_and_text_dark"
             app:popupTheme="?attr/actionBarPopupTheme"
             app:layout_scrollFlags="scroll|enterAlways">
         </androidx.appcompat.widget.Toolbar>
