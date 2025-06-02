@@ -66,8 +66,9 @@ dependencies {
     // RecyclerView
     implementation("androidx.recyclerview:recyclerview:1.3.2")
 
-    // Fragment (versi Java, karena kode aplikasi Anda Java)
-    implementation("androidx.fragment:fragment:1.7.0") // Versi terbaru
+    val fragment_version = "1.6.2"
+    implementation("androidx.fragment:fragment:$fragment_version")       // ← Tambahkan ini
+    implementation("androidx.fragment:fragment-ktx:$fragment_version")   // Sudah ada, ini tetap
 
     // --- Navigation Component (versi Java) ---
     val nav_version = "2.7.7" // PASTIKAN VERSI INI SAMA DENGAN DI PROJECT LEVEL
@@ -78,4 +79,7 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    implementation("com.github.bumptech.glide:glide:4.16.0") // Versi terbaru Glide
+
 }

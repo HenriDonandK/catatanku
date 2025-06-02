@@ -58,19 +58,14 @@ public class NoteListFragment extends Fragment implements NoteListAdapter.OnNote
         navController = NavHostFragment.findNavController(this);
 
         Toolbar toolbar = binding.toolbarNoteList;
-        // Setup Toolbar Fragment ini dengan NavController
         if (getActivity() instanceof AppCompatActivity) {
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-            // Gunakan AppBarConfiguration yang di-scope ke graph NavController saat ini
-            // Ini akan membuat tombol "Up" muncul dengan benar jika fragment ini bukan top-level.
-            // Untuk NoteListFragment yang merupakan startDestination, tombol Up tidak akan muncul.
             AppBarConfiguration appBarConfiguration =
                     new AppBarConfiguration.Builder(navController.getGraph()).build();
             NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
         }
 
-        setupMenu(); // Panggil setupMenu setelah Toolbar di-setup
-
+        setupMenu();
 
         RecyclerView recyclerView = binding.recyclerviewNotes;
         adapter = new NoteListAdapter(new DiffUtil.ItemCallback<Note>() {
@@ -81,8 +76,10 @@ public class NoteListFragment extends Fragment implements NoteListAdapter.OnNote
 
             @Override
             public boolean areContentsTheSame(@NonNull Note oldItem, @NonNull Note newItem) {
+                // PASTIKAN PENGECEKAN isPinned ADA DI SINI
                 return oldItem.getTitle().equals(newItem.getTitle()) &&
-                        oldItem.getContent().equals(newItem.getContent());
+                        oldItem.getContent().equals(newItem.getContent()) &&
+                        oldItem.isPinned() == newItem.isPinned(); // <--- INI PENTING
             }
         }, this);
 
@@ -91,13 +88,12 @@ public class NoteListFragment extends Fragment implements NoteListAdapter.OnNote
 
         noteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
         noteViewModel.displayedNotes.observe(getViewLifecycleOwner(), notes -> {
-            adapter.submitList(notes);
+            adapter.submitList(notes); // Ini akan memicu DiffUtil
         });
 
         binding.fabAddNote.setOnClickListener(v -> {
             NoteListFragmentDirections.ActionNoteListFragmentToAddEditNoteFragment action =
                     NoteListFragmentDirections.actionNoteListFragmentToAddEditNoteFragment();
-            // noteId defaultnya -1 dari nav_graph, jadi tidak perlu di-set jika untuk tambah baru
             action.setTitleArg(getString(R.string.add_note_title));
             navController.navigate(action);
         });
@@ -163,6 +159,18 @@ public class NoteListFragment extends Fragment implements NoteListAdapter.OnNote
                 .setNegativeButton(getString(R.string.cancel_button_text), null)
                 .setIcon(R.drawable.ic_delete)
                 .show();
+    }
+
+    @Override
+    public void onPinClick(Note note) {
+        note.setPinned(!note.isPinned());
+        noteViewModel.update(note); // Ini akan memicu pembaruan LiveData dari Room
+        // dan kemudian observer di atas akan berjalan.
+        if (note.isPinned()) {
+            Toast.makeText(getContext(), "Catatan disematkan", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getContext(), "Sematkan catatan dilepas", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void showDeleteAllConfirmationDialog() {

@@ -1,33 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
     tools:context=".ui.AddEditNoteFragment">
 
-    <EditText
-        android:id="@+id/edit_text_title"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar_add_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Judul Catatan"
-        android:inputType="textCapWords" />
+        android:fitsSystemWindows="true">
 
-    <EditText
-        android:id="@+id/edit_text_content"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar_add_edit_note"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="Detail Catatan"
+            android:background="@color/toolbar_background_light_blue" app:titleTextColor="@color/toolbar_icons_and_text_dark"   app:theme="@style/AppToolbarTheme"                       app:popupTheme="@style/AppDarkPopupMenu" />              </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/noteScrollView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="8dp"
-        android:hint="Isi Catatan"
-        android:inputType="textMultiLine"
-        android:gravity="top"/>
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:fillViewport="true">
 
-    <Button
-        android:id="@+id/button_save"
+        <LinearLayout
+            android:id="@+id/linearLayoutNoteContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <EditText
+                android:id="@+id/edit_text_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/add_note_title_hint"
+                android:inputType="textCapSentences"
+                android:textAppearance="?attr/textAppearanceHeadline5"
+                android:background="@android:color/transparent"
+                android:paddingBottom="8dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/edit_text_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/add_note_content_hint"
+                android:inputType="textMultiLine|textCapSentences"
+                android:minHeight="150dp" android:gravity="top"
+                android:background="@android:color/transparent"
+                android:textAppearance="?attr/textAppearanceBody1"/>
+
+            <ImageView
+                android:id="@+id/image_view_note_attachment"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" android:layout_marginTop="16dp"
+                android:scaleType="centerCrop"
+                android:visibility="gone"      android:contentDescription="Gambar Catatan"
+                android:background="#E0E0E0"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/footer_layout_add_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Simpan" />
+        android:orientation="vertical"
+        android:layout_gravity="bottom"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:background="?android:attr/windowBackground">
+        <LinearLayout
+            android:id="@+id/layout_image_options_footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingBottom="8dp">
 
-</LinearLayout>
+            <ImageButton
+                android:id="@+id/button_take_photo"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_camera" android:contentDescription="Ambil Foto"
+                android:padding="12dp"
+                app:tint="?attr/colorControlNormal"/>
+
+            <ImageButton
+                android:id="@+id/button_choose_gallery"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_gallery" android:contentDescription="Pilih dari Galeri"
+                android:padding="12dp"
+                app:tint="?attr/colorControlNormal"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/save_note_button_text" />
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
